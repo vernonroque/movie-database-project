@@ -37,6 +37,7 @@ function App() {
       const jsonResults = await selectedTrendingList.json();
       setTrendingResults(jsonResults.results);
       //setTrendingResults(jsonResults);
+      console.log('Trending results', trendingResults);
     }
 
     // const fetchMovieImage = async() => {
@@ -45,8 +46,7 @@ function App() {
     //   setMovieImages(json);
     //   console.log('movie image info', movieImages);
     // }
-    console.log('Trending results', trendingResults);
-
+   
     //fetchMovies();
     //fetchMovieImage();
     fetchConfig();
@@ -56,9 +56,14 @@ function App() {
   
   return (
     <>
+    <h1>Trending Today</h1>
+    <section className = "Trending-Container">
+    
     {trendingResults.length>0 && trendingResults.map((element,index) => {
       return <Trending key={index} trendingResults = {element}/>
     })}
+    </section>
+
     
     </>
   )

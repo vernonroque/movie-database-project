@@ -11,9 +11,10 @@ export const Trending = (props) => {
 
     return(
         <>
-        <h1>Hello Jabroni</h1>
-        <img src = {`${baseURL}${posterWidth}${posterFilePath}`} alt='movie poster'/>
+        <div className = "trending-item">
+        <img className = "trending-img" src = {`${baseURL}${posterWidth}${posterFilePath}`} alt='movie poster'/>
         <p>{props.trendingResults.overview}</p>
+        </div>
         </>
     )
     
