@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Trending} from './features/components/trending.js'; 
 import {Popular} from './features/components/popular.js';
+//import {Search} from './features/components/search.js';
 
 function App() {
 
@@ -15,17 +16,17 @@ function App() {
   const [config,setConfig] = useState([]);
   const [trendingResults, setTrendingResults] =useState([]);
   const [popularResults, setPopularResults] = useState([]);
+  const [entry,setEntry] = useState (''); 
+  //const [entryResults,setEntryResults] = useState([]);
 
-  
-  
   useEffect( () => {
 
-    const fetchConfig = async() => {
-      const selectedConfig = await fetch(`${baseURL}/configuration?api_key=${APIKEY}`);
-      const json = await selectedConfig.json();
-      setConfig(json);
-      console.log('config info', config);
-    }
+    // const fetchConfig = async() => {
+    //   const selectedConfig = await fetch(`${baseURL}/configuration?api_key=${APIKEY}`);
+    //   const json = await selectedConfig.json();
+    //   setConfig(json);
+    //   console.log('config info', config);
+    // }
 
     // const fetchMovies = async() => {
     //   const selectedMovie = await fetch(`${baseURL}movie/${movieID}?api_key=${APIKEY}`);
@@ -39,14 +40,14 @@ function App() {
       const jsonResults = await selectedTrendingList.json();
       setTrendingResults(jsonResults.results);
       //setTrendingResults(jsonResults);
-      console.log('Trending results', trendingResults);
+      //console.log('Trending results', trendingResults);
     }
 
     const fetchPopularList = async() => {
       const selectedPopularList = await fetch(`${baseURL}/movie/popular?api_key=${APIKEY}`);
-      const jsonResults = await selectedPopularList.json();
-      setPopularResults(jsonResults.results);
-      console.log('Popular results', popularResults);
+      const jsonResults2 = await selectedPopularList.json();
+      setPopularResults(jsonResults2.results);
+      //console.log('Popular results', popularResults);
 
     }
 
@@ -59,15 +60,41 @@ function App() {
    
     //fetchMovies();
     //fetchMovieImage();
-    fetchConfig();
+    //fetchConfig();
     fetchTrendingList();
     fetchPopularList();
 
-  },[movies.id,movieImages.id,trendingResults.length,config.length,popularResults.length]);
+  },[]);
+
+  const onHandleEntry = (event) => {
+
+    setEntry(event.target.value);
+}
+
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const fetchSearch = async () => {
+        const fetchSearchResults = await fetch(`${baseURL}/search/movie?api_key=${APIKEY}&query=${entry}`);
+        const jsonResults3 = await fetchSearchResults.json();
+
+        setTrendingResults(jsonResults3.results);
+        console.log('updated trending', trendingResults);
+        console.log('entryResults', jsonResults3.results);
+        console.log('updated trending 2', trendingResults);
+    }
+    fetchSearch();
+
+}
   
   return (
     <>
-    <h1>Trending Today</h1>
+    <header className ='app_header'>
+    <form onSubmit = {handleSubmit}>
+        <input type='text' value={entry} onChange = {onHandleEntry} placeholder = "Search..."/>
+        </form>
+    </header>
+    <h1 className="trending_title">Trending Today</h1>
     <section className = "Trending-Container">
     
     {trendingResults.length>0 && trendingResults.map((element,index) => {
