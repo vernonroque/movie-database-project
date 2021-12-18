@@ -22,6 +22,8 @@ export const Search = () => {
 
             setEntryResults(jsonResults);
             console.log('entryResults', entryResults.results);
+            setEntry('');
+            console.log('entry',entry);
         }
         
         fetchSearch();

@@ -17,7 +17,8 @@ function App() {
   const [trendingResults, setTrendingResults] =useState([]);
   const [popularResults, setPopularResults] = useState([]);
   const [entry,setEntry] = useState (''); 
-  //const [entryResults,setEntryResults] = useState([]);
+  const [entryResults,setEntryResults] = useState([]);
+  const [isSearch,setIsSearch] = useState(false);
 
   useEffect( () => {
 
@@ -40,7 +41,7 @@ function App() {
       const jsonResults = await selectedTrendingList.json();
       setTrendingResults(jsonResults.results);
       //setTrendingResults(jsonResults);
-      //console.log('Trending results', trendingResults);
+      console.log('Trending results', trendingResults);
     }
 
     const fetchPopularList = async() => {
@@ -64,7 +65,7 @@ function App() {
     fetchTrendingList();
     fetchPopularList();
 
-  },[]);
+  },[popularResults.length]);
 
   const onHandleEntry = (event) => {
 
@@ -74,16 +75,23 @@ function App() {
 const handleSubmit = (e) => {
     e.preventDefault();
 
-    const fetchSearch = async () => {
-        const fetchSearchResults = await fetch(`${baseURL}/search/movie?api_key=${APIKEY}&query=${entry}`);
-        const jsonResults3 = await fetchSearchResults.json();
+    if(entry){
+      const fetchSearch = async () => {
+          const fetchSearchResults = await fetch(`${baseURL}/search/movie?api_key=${APIKEY}&query=${entry}`);
+          const jsonResults3 = await fetchSearchResults.json();
 
-        setTrendingResults(jsonResults3.results);
-        console.log('updated trending', trendingResults);
-        console.log('entryResults', jsonResults3.results);
-        console.log('updated trending 2', trendingResults);
+          setTrendingResults(jsonResults3.results);
+          setEntryResults(jsonResults3.results);
+          console.log('updated trending', trendingResults);
+          console.log('entryResults', jsonResults3.results);
+          console.log('updated trending 2', trendingResults);
+          
+      }
+      fetchSearch();
+      setEntry('');
+      setIsSearch(true);
+      console.log('entry',entry);
     }
-    fetchSearch();
 
 }
   
@@ -91,14 +99,18 @@ const handleSubmit = (e) => {
     <>
     <header className ='app_header'>
     <form onSubmit = {handleSubmit}>
-        <input type='text' value={entry} onChange = {onHandleEntry} placeholder = "Search..."/>
+        <input className ='search' type='text' value={entry} onChange = {onHandleEntry} placeholder = "Search..."/>
         </form>
     </header>
-    <h1 className="trending_title">Trending Today</h1>
+    {!isSearch ? <h1 className="trending_title">Trending Today</h1>:<h1 className="trending_title">Search Results</h1>}
     <section className = "Trending-Container">
     
     {trendingResults.length>0 && trendingResults.map((element,index) => {
-      return <Trending key={index} trendingResults = {element}/>
+      if(element.poster_path){
+        return <Trending key={index} trendingResults = {element}/>
+      }
+      else
+        return '';
     })}
     </section>
     <h1>Popular Today</h1>
