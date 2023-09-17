@@ -26,7 +26,7 @@ export const Popular = (props) => {
                     <h3>{props.popularResults.title}</h3>
                     <h3 className ={`${colorChanger(props.popularResults.vote_average)}`}>{props.popularResults.vote_average}</h3>
                 </section>
-            <div className ="image-overlay">
+            <div className ="image-overlay image-overlay-blur">
                 {props.popularResults.overview ?
                 <p className ="overview"><span className="overview_title">Overview:</span>{props.popularResults.overview}</p>:
                 <p className ="overview"><span className="overview_title">Overview:</span>No Overview Available</p>}

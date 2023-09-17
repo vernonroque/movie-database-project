@@ -31,7 +31,7 @@ export const Trending = (props) => {
                         <h3 className ={`${colorChanger(props.trendingResults.vote_average)}`}>{props.trendingResults.vote_average}</h3>
                         
                     </section>
-                <div className ="image-overlay">
+                <div className ="image-overlay image-overlay-blur">
                   {props.trendingResults.overview ?
                     <p className = "overview"><span className="overview_title">Overview:</span>{props.trendingResults.overview}</p>:
                     <p className = "overview"><span className="overview_title">Overview:</span> No Overview Available </p> }
