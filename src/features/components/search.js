@@ -3,7 +3,7 @@ import React, {useState,useEffect} from 'react';
 export const Search = () => {
 
     const baseURL = 'https://api.themoviedb.org/3';
-    const APIKEY = 'abf63d7f66de896ec9b783751a6a428e';
+    const APIKEY = process.env.REACT_APP_MOVIEDATABASE_API_KEY;
 
     const [entry,setEntry] = useState (''); 
     const [entryResults,setEntryResults] = useState([]);
