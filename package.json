@@ -40,6 +40,7 @@
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.15",
-    "babel-eslint": "^10.1.0"
+    "babel-eslint": "^10.1.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
